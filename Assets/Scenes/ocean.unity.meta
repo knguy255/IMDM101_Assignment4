@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/ocean.unity.meta
 guid: 434c8c4b6355ce648bf6dd8fb212ed3b
+========
+guid: deed5b8ff1c304db2ac003de351430bc
+>>>>>>>> shreejash:Assets/Scenes/City.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

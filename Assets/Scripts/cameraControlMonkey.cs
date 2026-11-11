@@ -30,7 +30,6 @@ public class cameraControl : MonoBehaviour
         // 2. Smoothly move toward the target position
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
 
-        // 3. Keep the camera looking at the player's upper body
-        transform.LookAt(player.transform.position + Vector3.up * 1.5f);
+        // Keep the rotation configured in the Unity Editor.
     }
 }

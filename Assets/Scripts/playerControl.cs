@@ -1,61 +1,102 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class playerControl : MonoBehaviour
+public class UnityPlayerController : MonoBehaviour
 {
-    private Rigidbody rb;
-    private float movementX;
-    private float movementY;
-    private int bananaCount = 0;
+    public float playerSpeed = 5f;
+    public float rotationSpeed = 720f;
+    public float jumpHeight = 1.5f;
+    public float gravityValue = -9.81f;
 
-    public float speed = 10f;
-    public Transform movementCamera; 
+    public Transform movementCamera;
+    public InputActionReference moveAction; // expects Vector2
+    public InputActionReference jumpAction; // expects Button
 
-    void Start() 
+    private CharacterController controller;
+    private Animator animator;
+    private float verticalSpeed;
+
+    void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        
-        // Automatically find the Main Camera if slot is empty
-        if (movementCamera == null && Camera.main != null)
+        controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+    }
+
+    void OnEnable()
+    {
+        moveAction.action.Enable();
+        jumpAction.action.Enable();
+    }
+
+    void OnDisable()
+    {
+        moveAction.action.Disable();
+        jumpAction.action.Disable();
+    }
+
+    private void FixedUpdate()
+    {   // How to use manul input (GetKeyDown Approach)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            movementCamera = Camera.main.transform;
+            Debug.Log("Q down");
+        }
+        else if (Input.GetKeyUp(KeyCode.Q))
+        {
+            Debug.Log("Q up");
         }
     }
 
-    void OnMove(InputValue movementValue) 
+    void Update()
     {
-        Vector2 movementVector = movementValue.Get<Vector2>();
-        movementX = movementVector.x;
-        movementY = movementVector.y;
-    }
+        // 1. Read movement input (x: left/right, y: forward/backward).
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
 
-    void FixedUpdate() 
-    {
-        if (rb == null) return;
-
-        // 1. Get camera directions, flattening the Y axis so we stay grounded
-        Vector3 forward = movementCamera != null ? movementCamera.forward : Vector3.forward;
-        Vector3 right = movementCamera != null ? movementCamera.right : Vector3.right;
+        // 2. Use the camera's forward and right directions to move along the ground.
+        Vector3 forward = movementCamera.forward;
+        Vector3 right = movementCamera.right;
         forward.y = 0f;
         right.y = 0f;
         forward.Normalize();
         right.Normalize();
 
-        // 2. Calculate movement relative to where the camera is pointing
-        Vector3 moveDirection = (right * movementX + forward * movementY);
+        Vector3 move = right * input.x + forward * input.y;
+        // Prevent faster movement along diagonals.
+        move = Vector3.ClampMagnitude(move, 1f);
 
-        // 3. Apply velocity to Rigidbody
-        Vector3 targetVelocity = moveDirection * speed;
-        targetVelocity.y = rb.linearVelocity.y; // Keep vertical gravity (use rb.velocity.y if on older Unity versions)
-        rb.linearVelocity = targetVelocity;
-
-        // 4. Smoothly rotate the monkey to face the movement direction
-        if (moveDirection != Vector3.zero)
+        // 3. Rotate the character toward the movement direction.
+        if (move != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.2f);
+            Quaternion targetRotation = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+
+        // 4. Reset falling speed when grounded and handle jumping.
+        bool isGrounded = controller.isGrounded;
+        if (isGrounded && verticalSpeed < 0f)
+        {
+            verticalSpeed = -2f;
+        }
+
+        if (isGrounded && jumpAction.action.WasPressedThisFrame())
+        {
+            verticalSpeed = Mathf.Sqrt(jumpHeight * -2f * gravityValue);
+        }
+
+        // 5. Apply gravity, then combine horizontal and vertical movement.
+        verticalSpeed += gravityValue * Time.deltaTime;
+        Vector3 velocity = move * playerSpeed;
+        velocity.y = verticalSpeed;
+        controller.Move(velocity * Time.deltaTime);
+
+        // Stop rising when the character hits a ceiling.
+        if ((controller.collisionFlags & CollisionFlags.Above) != 0 && verticalSpeed > 0f)
+        {
+            verticalSpeed = 0f;
         }
     }
+
+    private int bananaCount = 0;
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Collectible")) {

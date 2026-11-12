@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class UnityPlayerController : MonoBehaviour
+public class _UnityPlayerController : MonoBehaviour
 {
     public float playerSpeed = 5f;
     public float rotationSpeed = 720f;

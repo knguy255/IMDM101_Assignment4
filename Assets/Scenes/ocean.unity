@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5f7c8c8c0d339488ac899fc3892ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::oceanPlayerControl
-  playerSpeed: 5
+  playerSpeed: 10
   rotationSpeed: 720
   speechBubble: {fileID: 1779611278}
   speechBubbleDelay: 3

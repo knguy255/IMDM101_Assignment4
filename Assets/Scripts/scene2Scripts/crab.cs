@@ -13,7 +13,7 @@ public class crab : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        float xOffset = Mathf.Sin(Time.time * 3f) * 5f;
+        float xOffset = Mathf.Sin(Time.time * 1f) * 5f;
         transform.position = startPosition + new Vector3(xOffset, 0f, 0f);
     }
 }

@@ -2115,6 +2115,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eded051879df4c147b9010199d240258, type: 3}
+--- !u!1 &1339848258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9bec42dd46d6146e785fea4912d14d76, type: 3}
+  m_PrefabInstance: {fileID: 1651070222}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1354531468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2604,13 +2609,63 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9bec42dd46d6146e785fea4912d14d76, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1651070225}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9bec42dd46d6146e785fea4912d14d76, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1651070224}
   m_SourcePrefab: {fileID: 100100000, guid: 9bec42dd46d6146e785fea4912d14d76, type: 3}
 --- !u!4 &1651070223 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9bec42dd46d6146e785fea4912d14d76, type: 3}
   m_PrefabInstance: {fileID: 1651070222}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1651070224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339848258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28997c5023af44a9d870838586f945ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityPlayerController
+  playerSpeed: 10
+  rotationSpeed: 720
+  jumpHeight: 1.5
+  gravityValue: -9.81
+  movementCamera: {fileID: 1248175507}
+  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!143 &1651070225
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339848258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1.11, z: 0}
 --- !u!1001 &1727157892
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class UnityPlayerController : MonoBehaviour
     public float rotationSpeed = 720f;
     public float jumpHeight = 1.5f;
     public float gravityValue = -9.81f;
+    private int bananaCount = 0;
 
     public Transform movementCamera;
     public InputActionReference moveAction; // expects Vector2
@@ -96,5 +97,13 @@ public class UnityPlayerController : MonoBehaviour
 
         // 6. Play the walking animation while moving on the ground.
         //animator.SetBool("IsMoving", move != Vector3.zero && isGrounded);
+    }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Collectible")) {
+            other.gameObject.SetActive(false); 
+            bananaCount++;
+            Debug.Log("Bananas collected: " + bananaCount + " / 39");
+        }
     }
 }

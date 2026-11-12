@@ -9,6 +9,7 @@ public class oceanPlayerControl : MonoBehaviour
     // monkey speech bubble
     public GameObject speechBubble;
     public float speechBubbleDelay = 3f;
+    public GameObject[] bananaObjects; // Array to hold references to banana GameObjects
 
 
 
@@ -55,12 +56,12 @@ public class oceanPlayerControl : MonoBehaviour
 
     void Start()
     {
-        if (speechBubble != null)
-        {
+        
             speechBubble.SetActive(true);
             Invoke(nameof(HideSpeechBubble),
                 speechBubbleDelay);
-        }
+            Invoke(nameof(showBananas), speechBubbleDelay);
+
     }
 
     
@@ -68,6 +69,15 @@ public class oceanPlayerControl : MonoBehaviour
     {
         speechBubble.SetActive(false);
     }
+
+    void showBananas()
+    {
+        foreach (GameObject banana in bananaObjects)
+        {
+            banana.SetActive(true);
+        }
+    }
+
 
 
     void Update()

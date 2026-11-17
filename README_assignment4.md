@@ -7,5 +7,5 @@ a city, an underwater scene, and a jungle (forest).
 
 # Contributions
 
-Kayla - created the underwater scene and edited scripts
+Kayla - created the underwater scene and edited scripts\
 Shreejash - created city and jungle scene 
